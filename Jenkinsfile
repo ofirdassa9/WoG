@@ -59,7 +59,7 @@ pipeline {
                         docker run -d -v ${WORKSPACE}/Scores.txt:/usr/src/app/Scores.txt -p 5000:5000 wog
                         docker run -d -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
                         sleep 3
-                        export CONTAINER_ID=$(docker ps | grep wog:wog_tests | cut -d " " -f1)
+                        export CONTAINER_ID=$(docker ps -a | grep wog:wog_tests | cut -d " " -f1)
                         export EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
                         docker logs $CONTAINER_ID
                         curl localhost:5000/index.html
