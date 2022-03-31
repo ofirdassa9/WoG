@@ -26,26 +26,28 @@ pipeline {
         }
         stage ('Build & Push images') {
             steps{
-                try {
-                    if ("${BUILD}" == "Yes") {
-                        sh '''
-                            docker-compose build
-                        '''
+                script{
+                    try {
+                        if ("${BUILD}" == "Yes") {
+                            sh '''
+                                docker-compose build
+                            '''
+                        }
+                        else {
+                            println("Not building")
+                        }
+                        if ("${PUSH}" == "Yes") {
+                            sh '''
+                                docker-compose push
+                            '''
+                        }
+                        else {
+                            println("Not pushing")
+                        }
                     }
-                    else {
-                        println("Not building")
+                    catch (Exception ex) {
+                        println("Unable to run command: ${ex}")
                     }
-                    if ("${PUSH}" == "Yes") {
-                        sh '''
-                            docker-compose push
-                        '''
-                    }
-                    else {
-                        println("Not pushing")
-                    }
-                }
-                catch (Exception ex) {
-                    println("Unable to run command: ${ex}")
                 }
             }
         }
