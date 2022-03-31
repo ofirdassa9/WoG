@@ -57,10 +57,10 @@ pipeline {
                     try {
                         sh '''
                         docker run -d -v ${WORKSPACE}/Scores.txt:/usr/src/app/Scores.txt -p 5000:5000 wog
-                        docker run -d -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
-                        export CONTAINER_ID=$(docker ps | grep wog:wog_tests | cut -d " " -f1)
-                        export EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
-                        docker logs $CONTAINER_ID
+                        docker run -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
+                        # export CONTAINER_ID=$(docker ps | grep wog:wog_tests | cut -d " " -f1)
+                        # export EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
+                        # docker logs $CONTAINER_ID
                         '''
                         if ("${EXIT_CODE}" == "-1") {
                             currentBuild.result = 'ABORTED'
