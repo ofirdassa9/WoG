@@ -63,6 +63,7 @@ pipeline {
                         export EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
                         '''
                         env.EXIT_CODE=sh(script: "echo ${EXIT_CODE}", returnStdout:true)
+                        println(env.EXIT_CODE)
                         if (env.EXIT_CODE == "1") {
                             currentBuild.result = 'ABORTED'
                             error("Aborting the build.")
