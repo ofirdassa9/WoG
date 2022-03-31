@@ -66,7 +66,9 @@ pipeline {
                             error("Aborting the build.")
                         }
                     }
-
+                    catch (Exception ex) {
+                        println("Unable to run command: ${ex}")
+                    }
                 }
             }
         }
