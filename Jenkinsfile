@@ -58,12 +58,17 @@ pipeline {
                         sh '''
                         docker run -d -v ${WORKSPACE}/Scores.txt:/usr/src/app/Scores.txt -p 5000:5000 wog
                         docker run -d -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
-                        containerid=$(docker ps | grep wog:wog_tests | cut -d " " -f1)
+                        export CONTAINER_ID=$(docker ps | grep wog:wog_tests | cut -d " " -f1)
                         export EXIT_CODE=$(docker inspect $containerid --format='{{.State.ExitCode}}')
                         '''
                         if (env.EXIT_CODE == "-1") {
                             currentBuild.result = 'ABORTED'
                             error("Aborting the build.")
+                        }
+                        else {
+                            sh '''
+                            docker logs $CONTAINER_ID
+                            '''
                         }
                     }
                     catch (Exception ex) {
