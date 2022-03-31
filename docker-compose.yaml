@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  wog:
+    image: wog
+    ports:
+      - "5000:5000"
+  tests:
+    image: "wog_test"
+    environment:
+      - HOSTIP=host.docker.internal
+    depends_on:
+      - wog
