@@ -56,21 +56,12 @@ pipeline {
                 script {
                     try {
                         sh '''
-                        docker run -d -v ${WORKSPACE}/Scores.txt:/usr/src/app/Scores.txt -p 5000:5000 wog
-                        docker run -d -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
-                        sleep 3
+                            docker run -d -v ${WORKSPACE}/Scores.txt:/usr/src/app/Scores.txt -p 5000:5000 wog
+                            docker run -d -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
+                            sleep 3
                         '''
                         env.CONTAINER_ID=sh(script: "docker ps -a | grep wog:wog_tests | cut -d ' ' -f1", returnStdout:true)
                         env.EXIT_CODE=sh(script: 'docker inspect $CONTAINER_ID --format="{{.State.ExitCode}}"', returnStdout:true).trim()
-                        if ("$EXIT_CODE" == "1") {
-                            println("EXIT CODE WAS 1")
-                            currentBuild.result = 'FAILURE'
-                            error("Tests failed")
-                        }
-                        else {
-                            println("EXIT CODE WAS NOT 1")
-                            println("$EXIT_CODE")
-                        }
                     }
                     catch (Exception ex) {
                         println("Unable to run command: ${ex}")
@@ -78,12 +69,21 @@ pipeline {
                 }
             }
         }
+        stage('Check tests') {
+            steps {
+                script  {
+                    sh''' 
+                        f [ $EXIT_CODE -eq 1 ];then echo "Tests Failed" && exit 1;fi
+                    '''
+                }
+            }
+        }
         stage ('Delete old containers') {
             steps {
                 script {
                     sh '''
-                    docker kill $(docker ps -q)
-                    docker rm $(docker ps -a -q)
+                        docker kill $(docker ps -q)
+                        docker rm $(docker ps -a -q)
                     '''
                 }
             }
