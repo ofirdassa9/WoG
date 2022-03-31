@@ -51,7 +51,7 @@ pipeline {
                 }
             }
         }
-        stage('Run WoG app') {
+        stage('Run & Test WoG app') {
             agent {
                 docker { 
                     image 'ofirdassa/wog:wog'
@@ -62,26 +62,26 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        python --version
+                        docker run ofirdassa/wog:wog_test
                     '''
                 }
             }
         }
-        stage ('Run Tests') {
-            agent {
-                docker { 
-                    image 'ofirdassa/wog:wog_tests'
-                    args '-e HOSTIP=host.docker.internal'
-                    reuseNode true
-                }
-            }
-            steps {
-                script {
-                    sh '''
-                        python --version
-                    '''
-                }
-            }
-        }
+        // stage ('Run Tests') {
+        //     agent {
+        //         docker { 
+        //             image 'ofirdassa/wog:wog_tests'
+        //             args '-e HOSTIP=host.docker.internal'
+        //             reuseNode true
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             sh '''
+        //                 python --version
+        //             '''
+        //         }
+        //     }
+        // }
     }
 }
