@@ -75,7 +75,7 @@ pipeline {
                     sh''' 
                         docker kill $(docker ps -q)
                         docker rm $(docker ps -a -q)
-                        if [ $EXIT_CODE -eq 1 ];then echo "Tests Failed" && exit 1;fi
+                        if [ $EXIT_CODE -eq 1 ];then echo "Tests Failed" && docker logs $CONTAINER_ID && exit 1;fi
                     '''
                 }
             }
