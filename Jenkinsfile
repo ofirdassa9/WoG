@@ -60,7 +60,7 @@ pipeline {
                         docker run -d -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
                         sleep 3
                         '''
-                        env.CONTAINER_ID=sh(script: "docker ps -a | grep wog:wog_tests | cut -d " " -f1", returnStdout:true)
+                        env.CONTAINER_ID=sh(script: "docker ps -a | grep wog:wog_tests | cut -d ' ' -f1", returnStdout:true)
                         env.EXIT_CODE=sh(script: "docker inspect ${CONTAINER_ID} --format='{{.State.ExitCode}}'", returnStdout:true)
                         if ("$EXIT_CODE" == "1") {
                             currentBuild.result = 'ABORTED'
