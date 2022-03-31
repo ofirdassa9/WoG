@@ -57,7 +57,6 @@ pipeline {
                     image 'ofirdassa/wog:wog'
                     args '-p 5000:5000'
                     reuseNode true
-                    ''
                 }
             }
             steps {
@@ -74,7 +73,6 @@ pipeline {
                     image 'ofirdassa/wog:wog_tests'
                     args '-e HOSTIP=host.docker.internal'
                     reuseNode true
-                    ''
                 }
             }
             steps {
