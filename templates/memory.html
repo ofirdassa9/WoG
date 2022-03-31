@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory Game</title>
+</head>
+<body>
+        <div>
+            <form action="memory" method="post">
+                <input type="text" id="user_guess"></input>
+                <p id="diffuculity" hidden>{{ diffuculity }}</p>
+                <p id="list">{{ list }}</p>
+                <button type="submit">Play!</button>
+                <h1 id = output>{{ output }}</h1>
+
+            </form>
+        </div>
+    
+    <script>
+        window.history.pushState({}, document.title, "/memory" );
+        if (document.getElementById("list").innerText > "") {
+            const myTimeout = setTimeout(empty, 1000);
+        }
+        function empty() {
+            document.getElementById("list").innerHTML = " ";
+        }
+    </script>
+</body>
+</html>
