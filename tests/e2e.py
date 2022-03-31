@@ -20,7 +20,7 @@ def test_scores_service(url):
 
 def main_function():
     if not test_scores_service(f"http://{ip}:5000"):
-        sys.exit(1)
+        sys.exit(-1)
     sys.exit(0)
 
 print("test")
