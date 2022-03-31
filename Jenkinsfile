@@ -60,13 +60,13 @@ pipeline {
                     ''
                 }
             }
-            // steps {
-            //     script {
-            //         sh '''
-            //             psql -h redshift-cluster-prod.cbqaieorrxk9.us-east-1.redshift.amazonaws.com -p 5439 -U centrical -d datacentric -f /tmp/t.sql -AF, > t.csv
-            //         '''
-            //     }
-            // }
+            steps {
+                script {
+                    sh '''
+                        python --version
+                    '''
+                }
+            }
         }
         stage ('Run Tests') {
             agent {
@@ -75,6 +75,13 @@ pipeline {
                     args '-e HOSTIP=host.docker.internal'
                     reuseNode true
                     ''
+                }
+            }
+            steps {
+                script {
+                    sh '''
+                        python --version
+                    '''
                 }
             }
         }
