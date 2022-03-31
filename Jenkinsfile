@@ -31,6 +31,7 @@ pipeline {
                         sh '''
                             docker-compose build
                         '''
+                    }
                     else {
                         println("Not building")
                     }
@@ -42,6 +43,9 @@ pipeline {
                     else {
                         println("Not pushing")
                     }
+                }
+                catch (Exception ex) {
+                    println("Unable to run command: ${ex}")
                 }
             }
         }
