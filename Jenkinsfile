@@ -77,6 +77,15 @@ pipeline {
                 }
             }
         }
+        stage ('Delete old containers') {
+            steps {
+                script {
+                    sh '''
+                    docker kill $(docker ps -q)
+                    '''
+                }
+            }
+        }
         // stage('Run & Test WoG app') {
         //     agent {
         //         docker { 
