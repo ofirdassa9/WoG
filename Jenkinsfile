@@ -69,6 +69,7 @@ pipeline {
                         }
                         else {
                             println("EXIT CODE WAS NOT 1")
+                            println("$EXIT_CODE")
                         }
                     }
                     catch (Exception ex) {
