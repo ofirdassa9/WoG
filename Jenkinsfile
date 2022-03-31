@@ -61,8 +61,8 @@ pipeline {
                         sleep 3
                         '''
                         env.CONTAINER_ID=sh(script: "docker ps -a | grep wog:wog_tests | cut -d ' ' -f1", returnStdout:true)
-                        env.EXIT_CODE=sh(script: 'docker inspect $CONTAINER_ID --format="{{.State.ExitCode}}"', returnStdout:true)
-                        if ("$EXIT_CODE" == 1) {
+                        env.EXIT_CODE=sh(script: 'docker inspect $CONTAINER_ID --format="{{.State.ExitCode}}"', returnStdout:true).trim()
+                        if ("$EXIT_CODE" == "1") {
                             println("EXIT CODE WAS 1")
                             currentBuild.result = 'ABORTED'
                             error("Aborting the build.")
