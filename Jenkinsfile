@@ -62,13 +62,13 @@ pipeline {
                         export EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
                         docker logs $CONTAINER_ID
                         '''
-                        if (env.EXIT_CODE == "-1") {
+                        if ("${EXIT_CODE}" == "-1") {
                             currentBuild.result = 'ABORTED'
                             error("Aborting the build.")
                         }
                         else {
                             sh '''
-                            docker logs $CONTAINER_ID
+                            docker logs ${CONTAINER_ID}
                             '''
                         }
                     }
