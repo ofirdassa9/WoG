@@ -63,8 +63,8 @@ pipeline {
                         env.CONTAINER_ID=sh(script: "docker ps -a | grep wog:wog_tests | cut -d ' ' -f1", returnStdout:true)
                         env.EXIT_CODE=sh(script: 'docker inspect $CONTAINER_ID --format="{{.State.ExitCode}}"', returnStdout:true).trim()
                         if ("$EXIT_CODE" == "1") {
-                            currentBuild.result = 'ABORTED'
-                            error("Aborting the build.")
+                            currentBuild.result = 'FAILURE'
+                            error("Tests failed")
                         }
                     }
                     catch (Exception ex) {
