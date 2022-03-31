@@ -23,4 +23,5 @@ def main_function():
         sys.exit(1)
     sys.exit(0)
 
+print("test")
 main_function()
