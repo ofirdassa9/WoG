@@ -73,17 +73,9 @@ pipeline {
             steps {
                 script  {
                     sh''' 
-                        f [ $EXIT_CODE -eq 1 ];then echo "Tests Failed" && exit 1;fi
-                    '''
-                }
-            }
-        }
-        stage ('Delete old containers') {
-            steps {
-                script {
-                    sh '''
                         docker kill $(docker ps -q)
                         docker rm $(docker ps -a -q)
+                        if [ $EXIT_CODE -eq 1 ];then echo "Tests Failed" && exit 1;fi
                     '''
                 }
             }
