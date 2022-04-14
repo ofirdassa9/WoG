@@ -56,7 +56,7 @@ pipeline {
                 script {
                     try {
                         sh '''
-                            docker run -d -v ${WORKSPACE}/Scores.txt:/usr/src/app/Scores.txt -p 5000:5000 wog
+                            docker run -d -v ${WORKSPACE}/Scores.txt:/usr/src/app/Scores.txt -p 5000:5000 ofirdassa/wog
                             docker run -d -e HOSTIP=host.docker.internal ofirdassa/wog:wog_tests
                             sleep 3
                         '''
