@@ -1,2 +1,2 @@
-# World of Game
+# World of Games
 *not finished
